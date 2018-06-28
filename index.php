@@ -83,13 +83,13 @@ require_once __DIR__.'/init.php';
                 <?php
                 foreach ($display as $data) {
                     echo "<tr>
-                        <th scope='row'>" . $data['id'] . "</th>
-                        <td>$" . $data["initial"] . "</td>
-                        <td>" . $data["program"] . "</td>
-                        <td>" . $data["transactions"] . "</td>
-                        <td>$" . $data["deposits"] . "</td>
-                        <td>$" . $data["balance"] . "</td>
-                        <td>$" . max($data["fees"]). "</td>
+                        <th scope='row'>" . (int)$data['id'] . "</th>
+                        <td>$" . htmlspecialchars($data["initial"], ENT_QUOTES) . "</td>
+                        <td>" . htmlspecialchars($data["program"], ENT_QUOTES) . "</td>
+                        <td>" . htmlspecialchars($data["transactions"], ENT_QUOTES) . "</td>
+                        <td>$" . htmlspecialchars($data["deposits"], ENT_QUOTES) . "</td>
+                        <td>$" . htmlspecialchars($data["balance"], ENT_QUOTES) . "</td>
+                        <td>$" . (int)max($data["fees"]). "</td>
                     </tr>";
                 }
                 ?>
