@@ -10,13 +10,20 @@ use LimitIterator;
  *
  * Get all user data to include balances, transactions and fees assessed.
  * @package App\Core
+ * @uses DataTrait for additional properties
  */
 class Data
 {
     use DataTrait;
 
+    /**
+     * int Users program number 1
+     */
     const PROGRAM1 = 1;
 
+    /**
+     * int Users program number 2
+     */
     const PROGRAM2 = 2;
 
     /**
@@ -67,8 +74,8 @@ class Data
     /**
      * Get users monthly activity
      *
-     * @param string $month
-     * @return array|int
+     * @param string $month Month of year to get data for
+     * @return array|int Summary of monthly activity
      */
     public function getTransactions(string $month):array
     {
@@ -91,9 +98,9 @@ class Data
     /**
      * Number of user transactions
      *
-     * @param array $data
-     * @param int $id
-     * @return int
+     * @param array $data User data array
+     * @param int $id users id
+     * @return int Amount of activity
      */
     public function getUserActivity(array $data, int $id):int
     {
@@ -114,9 +121,9 @@ class Data
     /**
      * Number of user deposits
      *
-     * @param array $data
-     * @param int $id
-     * @return int
+     * @param array $data User data array
+     * @param int $id Users id
+     * @return int Number of deposits
      */
     public function getUserDeposits(array $data, int $id): int
     {
@@ -137,10 +144,10 @@ class Data
     /**
      * Get users current balance
      *
-     * @param int $initial
-     * @param array $data
-     * @param int $id
-     * @return int
+     * @param int $initial Initial account balance
+     * @param array $data User data array
+     * @param int $id Users id
+     * @return int Current balance
      * @todo correct month to month
      */
     public function userBalance(int $initial, array $data, int $id): int
@@ -162,9 +169,9 @@ class Data
     /**
      * Set fee charged if balance is under required amount
      *
-     * @param int $balance
-     * @param int $program
-     * @return int
+     * @param int $balance Current dollar balance
+     * @param int $program Users program number
+     * @return int Fee based off of minimum
      */
     public function userBalanceOk(int $balance, int $program):int
     {
@@ -184,7 +191,7 @@ class Data
      *
      * @param int $transaction Total transactions
      * @param int $program Users program
-     * @return int
+     * @return int Fee based off of minimum
      */
     public function userTransactionOk(int $transaction, int $program): int
     {
@@ -205,7 +212,7 @@ class Data
      *
      * @param int $deposits Total deposits
      * @param int $program Users program
-     * @return int
+     * @return int Fee based off of minimum
      */
     public function userDespositsOk(int $deposits, int $program): int
     {

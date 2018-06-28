@@ -6,11 +6,15 @@ use SplFileObject;
 /**
  * Class Users
  * @package App\Core
+ * @uses DataTrait for additional properties
  */
 class Users
 {
     use DataTrait;
 
+    /**
+     * @var string $userFile Path to user data
+     */
     protected $userFile = __DIR__."/../files/StartingData.csv";
 
     /**
@@ -20,8 +24,10 @@ class Users
 
     /**
      * Get all user data
+     *
+     * @return array Initial user data array
      */
-    public function getUserData()
+    public function getUserData():array
     {
         try{
             $file = new SplFileObject($this->userFile);

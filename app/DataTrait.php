@@ -6,6 +6,8 @@ namespace App\Core;
 /**
  * Trait DataTrait
  * @package App\Core
+ * @used-by Users::class
+ * @used-by Data::class
  */
 trait DataTrait
 {
