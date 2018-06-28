@@ -24,13 +24,17 @@ if(isset($_GET['m'])){
         $list = $transaction->getTransactions($month);
         foreach ($data as $mdaKey => $mdaData) {
             $display[$mdaKey] = [
-                'id' => $mdaKey,
-                'initial' => $mdaData["amount"],
-                'program' => $mdaData["program"],
-                'transactions' => $transaction->getUserActivity($list, $mdaKey),
-                'deposits' => $transaction->getUserDeposits($list, $mdaKey),
-                'balance' => $transaction->userBalance($mdaData["amount"], $list, $mdaKey),
-                'fee' => $transaction->userBalanceOk($transaction->userBalance($mdaData["amount"], $list, $mdaKey), $mdaData["program"])
+                'id'            => $mdaKey,
+                'initial'       => $mdaData["amount"],
+                'program'       => $mdaData["program"],
+                'transactions'  => $transaction->getUserActivity($list, $mdaKey),
+                'deposits'      => $transaction->getUserDeposits($list, $mdaKey),
+                'balance'       => $transaction->userBalance($mdaData["amount"], $list, $mdaKey),
+                'fees'          => [
+                    'fee_balance'   => $transaction->userBalanceOk($transaction->userBalance($mdaData["amount"], $list, $mdaKey), $mdaData["program"]),
+                    'fee_trans'     => $transaction->userTransactionOk($transaction->getUserActivity($list, $mdaKey), $mdaData["program"]),
+                    'fee_deposits'  => $transaction->userDespositsOk($transaction->getUserDeposits($list, $mdaKey), $mdaData["program"]),
+                ],
             ];
         }
     }catch(\Throwable $e){

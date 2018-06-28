@@ -36,6 +36,13 @@ class Data
     /**
      * @var array $transactions
      */
+    protected $deposits = [
+        self::PROGRAM1 => 300,
+        self::PROGRAM2 => 800
+    ];
+    /**
+     * @var array $transactions
+     */
     protected $transactions = [
         self::PROGRAM1 => 5,
         self::PROGRAM2 => 1
@@ -162,7 +169,7 @@ class Data
     public function userBalanceOk(int $balance, int $program):int
     {
         try {
-            if($balance > $this->balance[$program]){
+            if($balance >= $this->balance[$program]){
                 return self::DEFAULT_VALUE;
             }
             return $this->penalty[$program];
@@ -173,17 +180,16 @@ class Data
     }
 
     /**
-     * Check balance for fee assessed
+     * Check transactions for fee assessed
      *
-     * @param $initial
-     * @param array $data
-     * @param int $id
+     * @param int $transaction Total transactions
+     * @param int $program Users program
      * @return int
      */
-    public function userTransactionOk(int $balance, int $program): int
+    public function userTransactionOk(int $transaction, int $program): int
     {
         try {
-            if($balance > $this->balance[$program]){
+            if($transaction >= $this->transactions[$program]){
                 return self::DEFAULT_VALUE;
             }
             return $this->penalty[$program];
@@ -194,6 +200,26 @@ class Data
         }
     }
 
+    /**
+     * Check deposits for fee assessed
+     *
+     * @param int $deposits Total deposits
+     * @param int $program Users program
+     * @return int
+     */
+    public function userDespositsOk(int $deposits, int $program): int
+    {
+        try {
+            if($deposits >= $this->deposits[$program]){
+                return self::DEFAULT_VALUE;
+            }
+            return $this->penalty[$program];
+
+        } catch (\Throwable $e) {
+            error_log($e->getMessage());
+            return self::DEFAULT_VALUE;
+        }
+    }
     /**
      * Get fees assessed for user
      *

@@ -89,7 +89,7 @@ require_once __DIR__.'/init.php';
                         <td>" . $data["transactions"] . "</td>
                         <td>$" . $data["deposits"] . "</td>
                         <td>$" . $data["balance"] . "</td>
-                        <td>$" . $data["fee"] . "</td>
+                        <td>$" . max($data["fees"]). "</td>
                     </tr>";
                 }
                 ?>
